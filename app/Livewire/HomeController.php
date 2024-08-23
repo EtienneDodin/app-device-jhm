@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Livewire;
+
+use Livewire\Attributes\Url;
+use Livewire\Component;
+use App\Models\Device;
+use App\Models\Type;
+use App\Models\Service;
+use App\Models\Location;
+
+use App\Exports\DevicesExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Response;
+
+class HomeController extends Component
+{
+    #[Url(except: '', history: true)]
+    public $search = '';
+
+    public function render()
+    {
+        $devices = Device::with('owner', 'location', 'type', 'service')
+        ->where('code', 'like', '%'.$this->search.'%')
+        ->orWhere('phone_number', 'like', '%'.$this->search.'%')
+        ->orWhere('ip', 'like', '%'.$this->search.'%')
+        ->orWhereHas('owner', function($query) {
+            $query->where('name', 'like', '%'.$this->search.'%');
+        })
+        ->orWhereHas('location', function($query) {
+            $query->where('name', 'like', '%'.$this->search.'%');
+        })
+        ->orWhereHas('service', function($query) {
+            $query->where('name', 'like', '%'.$this->search.'%');
+        })
+        ->orWhereHas('type', function($query) {
+            $query->where('name', 'like', '%'.$this->search.'%');
+        })
+        ->get();
+
+        $locations = Location::all();
+        $types = Type::all();
+        $services = Service::all();
+
+        return view('admin.index', compact('devices', 'locations', 'types', 'services'))->layout('layouts.app');
+    }
+
+    public function export($ext)
+    {
+        // abort_if(!in_array($ext, ['xlsx', 'pdf']), Response::HTTP_NOT_FOUND);
+
+        return Excel::download(new DevicesExport, 'materiel.' . $ext);
+    }
+}

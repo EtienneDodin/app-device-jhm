@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+      font-family: Akazan;
+      font-weight: 400;
+      src: url(fonts/webfonts/akazanrg-regular-webfont.woff2) format("woff2");
+    }
+    @font-face {
+        font-family: AkazanBold;
+        font-weight: bold;
+        src: url(fonts/webfonts/akazan_bd-webfont.woff2) format("woff2");
+    }
+    @font-face {
+        font-family: Barlow;
+        src: url(fonts/webfonts/barlow-regular-webfont.woff2) format("woff2");
+    }
+    @font-face {
+      font-family: BarlowBold;
+      font-weight: bold;
+      src: url(fonts/webfonts/barlow-bold-webfont.woff2) format("woff2");
+    }
+    @font-face {
+      font-family: 'proxima_novamedium';
+      src: url(fonts/webfonts/proxima_nova/proximanova-medium-webfont.woff2) format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+}
+
+[x-cloak] {
+    display: none;
+}
