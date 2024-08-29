@@ -52,7 +52,8 @@
                 <div class="flex flex-col gap-2 items-center">
                     <label for="location_id">Emplacement</label>
                     <select name="location_id" id="location_id" class="w-56 border rounded-md border-anthracite-grey">
-                        <option value="" class="text-gray-500">-</option>
+                        <option class="text-gray-500" value="">Non défini</option>
+
                         @foreach ($locations as $location)
                             <option value="{{ $location->id }}" {{ $location->id == old('location_id') ? 'selected' : '' }}>
                                 {{ $location->name }}
@@ -65,7 +66,8 @@
                 <div class="flex flex-col gap-2 items-center">
                     <label for="service_id">Service</label>
                     <select name="service_id" id="service_id" class="w-56 border rounded-md border-anthracite-grey">
-                        <option value="" class="text-gray-500">-</option>
+                        <option class="text-gray-500" value="">Non défini</option>
+
                         @foreach ($services as $service)
                             <option value="{{ $service->id }}" {{ $service->id == old('service_id') ? 'selected' : '' }}>
                                 {{ $service->name }}
@@ -76,8 +78,7 @@
 
                 {{-- Owner --}}
                 <div class="flex flex-col gap-2 items-center">
-                    <label for="owner">Utilisateur</label>
-                    {{-- @livewire('search-dropdown') --}}
+                    <label for="owner_id">Utilisateur</label>
                     <livewire:search-dropdown />
                 </div>
 

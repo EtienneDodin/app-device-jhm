@@ -6,15 +6,23 @@
         <div class="pt-6">
             <form action="{{ route('types.store') }}" method="POST" class="font-proxima flex flex-col items-center gap-12">
                 @csrf
+
                 <div class="flex flex-col gap-3 items-center">
                     <label for="name">Type d'équipement</label>
                     <input type="text" name="name" id="name" class="border rounded-md border-anthracite-grey">
+
+                    @error('name')
+                        <p class="text-rose-700">{{ $message }}</p>
+                    @enderror
+                    
                 </div>
+
                 <div class="flex gap-4 items-center">
                     <label for="number">Numéro de téléphone</label>
                     <input type="hidden" name="accepts_number" value="0">
                     <input type="checkbox" id="number" name="accepts_number" value="1">
                 </div>
+
                 <div class="flex gap-4 items-center">
                     <label for="ip">Adresse IP</label>
                     <input type="hidden" name="accepts_ip" value="0">

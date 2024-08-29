@@ -11,12 +11,13 @@ class SearchDropdown extends Component
     public $searchOwner;
     public $owners;
     public $selectedOwnerId;
+    public $selectedOwnerName;
 
-    public function mount()
+    public function mount($selectedOwnerId = null, $selectedOwnerName = '')
     {
-        $this->searchOwner = '';
         $this->owners = Owner::all();
-        $this->selectedOwnerId = null;
+        $this->selectedOwnerId = $selectedOwnerId;
+        $this->searchOwner = $selectedOwnerName;
     }
 
     public function updatedSearchOwner()
@@ -24,7 +25,9 @@ class SearchDropdown extends Component
         $this->owners = Owner::where('name', 'like', '%' . $this->searchOwner . '%')->get();
     }
 
-    #[On('user-clicked')]
+    // When user clicks on an owner, this method will be called
+    
+    #[On('userClicked')]
     public function selectOwner($ownerId)
     {
         $this->selectedOwnerId = $ownerId;

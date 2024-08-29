@@ -6,10 +6,10 @@
     <div class="bg-light-gray w-full min-h-screen flex justify-center">
 
         {{-- Page container --}}
-        <div class="w-7xl mx-4">
+        <div class="w-8xl mx-4">
 
             {{-- Bar --}}
-            <div class="flex justify-between max-w-7xl my-6">
+            <div class="flex justify-between max-w-8xl my-6">
                 {{-- 'Create' links --}}
                 <div class="flex gap-6 items-center">
                     <a href="{{ route('devices.create') }}"
@@ -62,7 +62,7 @@
                         </button>
 
                         {{-- Excel --}}
-                        <button type="button" class="group flex flex-col gap-2 items-center" title="Exporter la sélection actuelle pour Excel" wire:click="export('xlsx')">
+                        <button type="button" class="group flex flex-col gap-2 items-center" title="Exporter la sélection actuelle vers Excel" wire:click="export('xlsx')">
                             <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path class="fill-main-blue" d="M23.172 0C23.7022 0 24.2107 0.210507 24.5857 0.585255L36.4137 12.4044C36.7891 12.7795 37 13.2884 37 13.8191V35.3333C37 37.9107 34.8689 40 32.24 40H7.76C5.13112 40 3 37.9107 3 35.3333V4.66667C3 2.08934 5.13112 0 7.76 0H23.172Z" />
                                 <g filter="url(#filter0_d_1255_158054)">
@@ -100,11 +100,11 @@
                 <div class="bg-main-gray px-4 py-6 rounded">
                     <ul class="flex font-proxima">
                         <li class="basis-28 text-center">Poste</li>
-                        <li class="basis-40 text-center">Type</li>
+                        <li class="basis-44 text-center">Type</li>
                         <li class="basis-48 text-center">Utilisateur</li>
                         <li class="basis-36 text-center">Emplacement</li>
                         <li class="basis-32 text-center">Service</li>
-                        <li class="basis-32 text-center">Téléphone</li>
+                        <li class="basis-36 text-center">Téléphone</li>
                         <li class="basis-32 text-center">IP</li>
                     </ul>
                 </div>
@@ -117,12 +117,8 @@
                         <p class="basis-28 font-semibold text-center">{{ $device->code }}</p>
                     
                         {{-- Type --}}
-                        <div class="basis-40">
-                            @foreach ($types as $type)
-                                @if ($type->id == $device->type_id)
-                                    <p class="text-center">{{ $type->name }}</p>
-                                @endif
-                            @endforeach
+                        <div class="basis-44">
+                            <p class="text-center">{{ $device->type->name }}</p>
                         </div>
                     
                         {{-- Owner --}}
@@ -136,25 +132,27 @@
                     
                         {{-- Location --}}
                         <div class="basis-36">
-                            @foreach ($locations as $location)
-                                @if ($location->id == $device->location_id)
-                                    <p class="text-center">{{ $location->name }}</p>
-                                @endif
-                            @endforeach
+                            @if ($device->location)
+                                <p class="text-center">{{ $device->location->name }}</p>
+                            @else
+                                <p class="text-center text-anthracite-grey">Non défini</p>
+                            @endif
+                            
                         </div>
 
                         {{-- Service --}}
                         <div class="basis-32">
-                            @foreach ($services as $service)
-                                @if ($service->id == $device->service_id)
-                                    <p class="text-center">{{ $service->name }}</p>
-                                @endif
-                            @endforeach
+                            @if ($device->service)
+                                <p class="text-center">{{ $device->service->name }}</p>
+                            @else
+                                <p class="text-center text-anthracite-grey">Non défini</p>
+                            @endif
+                                
                         </div>
                     
                         {{-- Phone number --}}
-                        <div class="basis-32">
-                            <p class="text-center">{{ $device->phone_number }}</p>
+                        <div class="basis-36">
+                            <p class="text-center">{{ $device->phone_number ? preg_replace('/(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/', '$1 $2 $3 $4 $5', '0' . $device->phone_number) : '' }}</p>
                         </div>
 
                         {{-- IP --}}
@@ -165,13 +163,13 @@
                         {{-- Buttons --}}
                         <div class="flex gap-6 ml-12">
                             {{-- Edit --}}
-                            <a href="{{ route('devices.edit', $device) }}" class="rounded-md px-3 py-1.5 bg-main-gray hover:bg-main-gray/75">Modifier</a>
+                            <a href="{{ route('devices.edit', $device) }}" class="rounded-md border border-gray-300 px-3 py-1.5 bg-main-gray hover:bg-main-gray/75 transition duration-200 ease">Modifier</a>
                         
                             {{-- Delete --}}
                             <form action="{{ route('devices.destroy', $device) }}" method="POST" x-data="{ open: false }">
                                 @method('DELETE')
                                 @csrf
-                                <button type="button" @click="open = true" class="rounded-md px-3 py-1.5 bg-light-orange hover:bg-main-orange">Supprimer</button>
+                                <button type="button" @click="open = true" class="rounded-md shadow-sm px-3 py-1.5 bg-light-orange hover:bg-main-orange transition duration-200 ease">Supprimer</button>
                             
                                 {{-- Confirmation modal window --}}
                                 {{-- Overlay --}}

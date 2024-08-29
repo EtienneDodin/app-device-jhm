@@ -19,7 +19,7 @@ export default {
                 proxima: ['proxima_novamedium', ...defaultTheme.fontFamily.sans],
             },
             spacing: {
-                '7xl': '80rem',
+                '8xl': '84rem',
             },
             colors: {
                 'light-blue': '#30B6EA',

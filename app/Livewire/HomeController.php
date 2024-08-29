@@ -38,13 +38,11 @@ class HomeController extends Component
         })
         ->get();
 
-        $locations = Location::all();
-        $types = Type::all();
-        $services = Service::all();
-
-        return view('admin.index', compact('devices', 'locations', 'types', 'services'))->layout('layouts.app');
+        return view('admin.index', compact('devices'))->layout('layouts.app');
     }
 
+
+    // Export data to Excel or PDF using Laravel-Excel
     public function export($ext)
     {
         // abort_if(!in_array($ext, ['xlsx', 'pdf']), Response::HTTP_NOT_FOUND);

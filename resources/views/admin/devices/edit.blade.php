@@ -35,6 +35,7 @@
         {{-- Type --}}
         <div class="flex flex-col gap-2 items-center">
             <label for="type_id">Type d'équipement</label>
+            
             <select name="type_id" id="type_id" class="w-56 border rounded-md border-anthracite-grey" x-on:change="updateFields" x-ref="typeSelect">
                 @foreach ($types as $type)
                     <option value="{{ $type->id }}" data-accepts-number="{{ $type->accepts_number }}" data-accepts-ip="{{ $type->accepts_ip }}" {{ $type->id == $device->type_id ? 'selected' : '' }}>
@@ -50,40 +51,54 @@
 
         {{-- Owner --}}
         <div class="flex flex-col gap-2 items-center">
-            <label for="owner">Utilisateur</label>
+            <label for="owner_id">Utilisateur</label>
+
             @if ($device->owner)
-                <input type="text" name="owner_id" id="owner" value="{{ $device->owner->name }}">
+                <livewire:search-dropdown :selectedOwnerId="$device->owner_id" :selectedOwnerName="$device->owner->name" />
             @else
-                <input type="text" name="owner_id" id="owner">
+                <livewire:search-dropdown />
             @endif
+            
         </div>
 
         {{-- Location --}}
         <div class="flex flex-col gap-2 items-center">
             <label for="location_id">Emplacement</label>
+
             <select name="location_id" id="location_id" class="w-56 border rounded-md border-anthracite-grey">
                 @foreach ($locations as $location)
                     <option value="{{ $location->id }}" {{ $location->id == $device->location_id ? 'selected' : '' }}>{{ $location->name }}</option>
                 @endforeach
+
+                <option class="text-gray-500" value="">Non défini</option>
             </select>
         </div>
 
         {{-- Service --}}
         <div class="flex flex-col gap-2 items-center">
             <label for="service_id">Service</label>
+
             <select name="service_id" id="service_id" class="w-56 border rounded-md border-anthracite-grey">
                 @foreach ($services as $service)
                     <option value="{{ $service->id }}" {{ $service->id == $device->service_id ? 'selected' : '' }}>{{ $service->name }}</option>
                 @endforeach
-                <option value="" class="text-gray-500">-</option>
+
+                <option class="text-gray-500" value="">Non défini</option>
             </select>
         </div>
 
         {{-- Phone number --}}
         <div x-show="showNumberField" x-cloak class="flex flex-col gap-2 items-center">
             <label for="phone_number">Numéro de téléphone</label>
-            <input type="text" name="phone_number" id="phone_number" maxlength="10" value="{{ $device->phone_number }}" class="w-56 border rounded-md border-anthracite-grey">
 
+            {{-- Checking if number exists --}}
+            @if ($device->phone_number)
+                <input type="text" name="phone_number" id="phone_number" maxlength="10" value="{{ '0' . $device->phone_number }}" class="w-56 border rounded-md border-anthracite-grey">
+            @else
+                <input type="text" name="phone_number" id="phone_number" maxlength="10" class="w-56 border rounded-md border-anthracite-grey">
+            @endif
+
+            {{-- Error --}}
             @error('phone_number')
                 <p class="text-rose-700">{{ $message }}</p>
             @enderror

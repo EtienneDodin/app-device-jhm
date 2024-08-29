@@ -11,14 +11,7 @@ use App\Models\Service;
 
 class DeviceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
+    
     /**
      * Rules to validate.
      */

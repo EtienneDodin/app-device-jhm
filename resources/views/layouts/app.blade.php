@@ -110,10 +110,11 @@
         <main class="w-[96%]">
             <div>
                 <div class="flex justify-center">
+
                     {{-- Heading --}}
-                    <div class="mb-6 flex flex-col gap-4 w-7xl">
+                    <div class="mb-4 flex flex-col gap-1 w-8xl">
                         {{-- Title and logo --}}
-                        <div class="flex gap-80 items-center justify-center pt-16 pb-10">
+                        <div class="flex gap-80 items-center justify-center pt-12 pb-10">
                             <h1 class="font-akazan text-6xl text-main-blue">{{ $header }}</h1>
                             <svg width="105" height="29" viewBox="0 0 105 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -192,7 +193,7 @@
                                 <span>/</span>
                                 <a href="{{ route('owners.index') }}" class="underline underline-offset-2 decoration-slate-300">Gestion des utilisateurs</a>
                                 <span>/</span>
-                                <a href="{{ route('owners.create') }}" class="underline underline-offset-2 decoration-slate-300">Créer un utilisateur</a>
+                                <a href="{{ route('owners.create') }}" class="underline underline-offset-2 decoration-slate-300">{{ $header }}</a>
                             @endif
 
                             @if (request()->routeIs('owners.edit'))
@@ -208,7 +209,7 @@
                                 <span>/</span>
                                 <a href="{{ route('locations.index') }}" class="underline underline-offset-2 decoration-slate-300">Gestion des emplacements</a>
                                 <span>/</span>
-                                <a href="{{ route('locations.create') }}" class="underline underline-offset-2 decoration-slate-300">Créer un emplacement</a>
+                                <a href="{{ route('locations.create') }}" class="underline underline-offset-2 decoration-slate-300">{{ $header }}</a>
                             @endif
 
                             @if (request()->routeIs('services.create'))
@@ -216,7 +217,7 @@
                                 <span>/</span>
                                 <a href="{{ route('services.index') }}" class="underline underline-offset-2 decoration-slate-300">Gestion des services</a>
                                 <span>/</span>
-                                <a href="{{ route('services.create') }}" class="underline underline-offset-2 decoration-slate-300">Créer un service</a>
+                                <a href="{{ route('services.create') }}" class="underline underline-offset-2 decoration-slate-300">{{ $header }}</a>
                             @endif
 
                             @if (request()->routeIs('types.create'))
@@ -224,7 +225,7 @@
                                 <span>/</span>
                                 <a href="{{ route('types.index') }}" class="underline underline-offset-2 decoration-slate-300">Gestion des types d'équipement</a>
                                 <span>/</span>
-                                <a href="{{ route('types.create') }}" class="underline underline-offset-2 decoration-slate-300">Créer un type</a>
+                                <a href="{{ route('types.create') }}" class="underline underline-offset-2 decoration-slate-300">{{ $header }}</a>
                             @endif
 
                             @if (request()->routeIs('types.edit'))
