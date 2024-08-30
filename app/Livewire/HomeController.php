@@ -5,18 +5,16 @@ namespace App\Livewire;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use App\Models\Device;
-use App\Models\Type;
-use App\Models\Service;
-use App\Models\Location;
 
 use App\Exports\DevicesExport;
 use Maatwebsite\Excel\Facades\Excel;
-use Response;
 
 class HomeController extends Component
 {
     #[Url(except: '', history: true)]
     public $search = '';
+
+    public $exportCopy;
 
     public function render()
     {
@@ -38,6 +36,8 @@ class HomeController extends Component
         })
         ->get();
 
+        $this->exportCopy = $devices;
+
         return view('admin.index', compact('devices'))->layout('layouts.app');
     }
 
@@ -45,8 +45,8 @@ class HomeController extends Component
     // Export data to Excel or PDF using Laravel-Excel
     public function export($ext)
     {
-        // abort_if(!in_array($ext, ['xlsx', 'pdf']), Response::HTTP_NOT_FOUND);
+        $export = new DevicesExport($this->exportCopy);
 
-        return Excel::download(new DevicesExport, 'materiel.' . $ext);
+        return Excel::download($export, 'materiel.' . $ext);
     }
 }

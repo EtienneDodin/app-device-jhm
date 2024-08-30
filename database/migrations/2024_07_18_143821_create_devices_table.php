@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->unsignedInteger('phone_number')->nullable();
-            $table->string('ip')->nullable();
-            $table->foreignId('owner_id')->nullable();
             $table->foreignId('type_id');
+            $table->foreignId('owner_id')->nullable();
             $table->foreignId('location_id')->nullable();
             $table->foreignId('service_id')->nullable();
+            $table->unsignedInteger('phone_number')->nullable();
+            $table->string('ip')->nullable();
             $table->timestamps();
         });
     }

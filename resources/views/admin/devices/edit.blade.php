@@ -70,7 +70,7 @@
                     <option value="{{ $location->id }}" {{ $location->id == $device->location_id ? 'selected' : '' }}>{{ $location->name }}</option>
                 @endforeach
 
-                <option class="text-gray-500" value="">Non défini</option>
+                <option class="text-gray-500" value="" {{ !$device->location_id ? 'selected' : '' }}>Non défini</option>
             </select>
         </div>
 
@@ -83,7 +83,7 @@
                     <option value="{{ $service->id }}" {{ $service->id == $device->service_id ? 'selected' : '' }}>{{ $service->name }}</option>
                 @endforeach
 
-                <option class="text-gray-500" value="">Non défini</option>
+                <option class="text-gray-500" value="" {{ !$device->service_id ? 'selected' : '' }}>Non défini</option>
             </select>
         </div>
 
