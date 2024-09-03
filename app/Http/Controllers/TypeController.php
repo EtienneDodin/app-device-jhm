@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Type;
+use App\Models\Device;
 
 class TypeController extends Controller
 {
@@ -30,6 +31,17 @@ class TypeController extends Controller
     }
 
     /**
+     * Custom validation messages.
+     */
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Le nom du type d\'équipement est requis.',
+        ];
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -42,9 +54,9 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate($this->rules());
+        $validatedData = $request->validate($this->rules(), $this->messages());
 
-        $type = Type::create($validatedData);
+        Type::create($validatedData);
 
         return redirect()->route('types.index');
     }
@@ -62,7 +74,7 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        $validatedData = $request->validate($this->rules());
+        $validatedData = $request->validate($this->rules(), $this->messages());
 
         $type->update($validatedData);
 
@@ -72,8 +84,12 @@ class TypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Type $type)
     {
-        //
+        Device::where('type_id', $type->id)->update(['type_id' => null]);
+
+        $type->delete();
+
+        return redirect()->route('types.index');
     }
 }

@@ -19,6 +19,27 @@ class ServiceController extends Controller
     }
 
     /**
+     * Rules to validate.
+     */
+    public function rules(): array
+    {
+        return [
+            'name' => 'required',
+        ];
+    }
+
+    /**
+     * Custom validation messages.
+     */
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Le nom du service est requis.',
+        ];
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -31,11 +52,9 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-        ]);
+        $validatedData = $request->validate($this->rules(), $this->messages());
 
-        $service = Service::create($validatedData);
+        Service::create($validatedData);
 
         return redirect()->route('services.index');
     }
@@ -53,9 +72,7 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-        ]);
+        $validatedData = $request->validate($this->rules(), $this->messages());
 
         $service->update($validatedData);
 

@@ -42,11 +42,17 @@ class HomeController extends Component
     }
 
 
-    // Export data to Excel or PDF using Laravel-Excel
+    // Export data to Excel or PDF using Laravel Excel
     public function export($ext)
     {
         $export = new DevicesExport($this->exportCopy);
 
-        return Excel::download($export, 'materiel.' . $ext);
+        if ($ext == 'pdf') {
+            $format = \Maatwebsite\Excel\Excel::MPDF;
+        } elseif ($ext == 'xlsx') {
+            $format = \Maatwebsite\Excel\Excel::XLSX;
+        };
+
+        return Excel::download($export, 'materiel.' . $ext, $format);
     }
 }

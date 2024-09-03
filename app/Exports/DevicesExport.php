@@ -5,6 +5,7 @@ namespace App\Exports;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\Style;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -12,14 +13,25 @@ use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 
-class DevicesExport implements FromCollection, WithHeadings, WithColumnFormatting, WithMapping, ShouldAutoSize, WithStyles
+class DevicesExport implements FromCollection, WithHeadings, WithColumnFormatting, WithMapping, ShouldAutoSize, WithStyles, WithDefaultStyles
 {
     protected $devices;
 
     public function __construct($devices)
     {
         $this->devices = $devices;
+    }
+
+    public function defaultStyles(Style $defaultStyle)
+    {    
+        // Style the entire worksheet
+        return [
+            'alignment' => [
+                'horizontal' => 'center',
+            ],
+        ];
     }
 
     public function styles(Worksheet $sheet)
@@ -33,9 +45,6 @@ class DevicesExport implements FromCollection, WithHeadings, WithColumnFormattin
                 'fill' => [
                     'fillType' => 'solid',
                     'startColor' => ['rgb' => '30B6EA']
-                ],
-                'alignment' => [
-                    'horizontal' => 'center',
                 ],
             ],
         ];

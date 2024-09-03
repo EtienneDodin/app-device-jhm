@@ -6,9 +6,13 @@
     <form action="{{ route('types.update', $type) }}" method="POST" class="flex flex-col items-center gap-12">
         @method('PUT')
         @csrf
-        <div class="flex flex-col gap-2 items-center">
+        <div class="flex flex-col gap-3 items-center">
             <label for="name">Nom</label>
             <input type="text" name="name" id="name" value="{{ $type->name }}" class="border rounded-md border-anthracite-grey">
+
+            @error('name')
+                <p class="text-rose-700">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="flex gap-4 items-center">

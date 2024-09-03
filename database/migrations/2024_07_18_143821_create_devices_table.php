@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->foreignId('type_id');
+            $table->foreignId('type_id')->nullable();
             $table->foreignId('owner_id')->nullable();
             $table->foreignId('location_id')->nullable();
             $table->foreignId('service_id')->nullable();

@@ -19,7 +19,7 @@ class DeviceController extends Controller
     {
         return [
             'code' => 'required',
-            'type_id' => 'integer|required',
+            'type_id' => 'integer|nullable',
             'location_id' => 'integer|nullable',
             'service_id' => 'integer|nullable',
             'owner_id' => 'integer|nullable',
@@ -36,7 +36,6 @@ class DeviceController extends Controller
     {
         return [
             'code.required' => 'Le numéro de poste est obligatoire.',
-            'type_id.required' => 'Le type de matériel est obligatoire.',
             // 'service_id.exists' => 'Le service sélectionné est invalide.',
             'phone_number.numeric' => 'Le numéro de téléphone doit être un nombre.',
             'phone_number.regex' => 'Le numéro de téléphone doit contenir 10 chiffres, au format 0600000000.',
@@ -64,17 +63,9 @@ class DeviceController extends Controller
     {
         $validatedData = $request->validate($this->rules(), $this->messages());
 
-        $device = Device::create($validatedData);
+        Device::create($validatedData);
 
         return redirect()->route('index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -98,6 +89,19 @@ class DeviceController extends Controller
 
         $device->update($validatedData);
 
+        // Empty phone number and IP if the device type does not accept them
+        if ($device->type_id) {
+            if (!$device->type->accepts_number) {
+                $device->update(['phone_number' => null]);
+            };
+    
+            if (!$device->type->accepts_ip) {
+                $device->update(['ip' => null]);
+            };
+        } else {
+            $device->update(['phone_number' => null, 'ip' => null]);
+        };
+        
         return redirect()->route('index');
     }
 

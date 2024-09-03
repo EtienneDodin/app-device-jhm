@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="flex flex-col items-center">
-        {{-- Créer un nouvel emplacement --}}
+        {{-- Add new location --}}
         <a href="{{ route('locations.create') }}" class="mt-4 mb-16 py-1.5 px-4 flex gap-2 items-center bg-white hover:bg-light-gray transition duration-200 ease-in-out border rounded-md border-main-gray">
             <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 12H20M12 4V20" stroke="#000000" stroke-width="2" stroke-linecap="round"
@@ -15,8 +15,8 @@
 
         {{-- Liste des emplacements --}}
         <div>
-            <div class="bg-light-gray font-proxima flex gap-16 items-center">
-                <h1 class="text-lg pl-4 pr-28 py-4">Liste des emplacements</h1>
+            <div class="bg-light-gray w-80 font-proxima flex">
+                <h1 class="text-lg pl-4 py-4">Liste des emplacements</h1>
             </div>
 
             @foreach ($locations as $location)

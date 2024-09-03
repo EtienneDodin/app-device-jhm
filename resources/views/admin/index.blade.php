@@ -6,10 +6,10 @@
     <div class="bg-light-gray w-full min-h-screen flex justify-center">
 
         {{-- Page container --}}
-        <div class="w-8xl mx-4">
+        <div class="basis-8xl mx-4">
 
             {{-- Bar --}}
-            <div class="flex justify-between max-w-8xl my-6">
+            <div class="flex justify-between my-6">
                 {{-- 'Create' links --}}
                 <div class="flex gap-6 items-center">
                     <a href="{{ route('devices.create') }}"
@@ -90,15 +90,13 @@
                     <input wire:model.live="search" type="search" placeholder="Rechercher..." aria-label="Rechercher du contenu dans l'application" class="border rounded-md border-main-gray">
                 </div>
 
-                
-                
             </div>
 
             {{-- Main table --}}
             <div>
                 {{-- Heading --}}
                 <div class="bg-main-gray px-4 py-6 rounded">
-                    <ul class="flex font-proxima">
+                    <ul class="flex font-proxima max-w-5xl">
                         <li class="basis-28 text-center">Poste</li>
                         <li class="basis-44 text-center">Type</li>
                         <li class="basis-48 text-center">Utilisateur</li>
@@ -118,7 +116,11 @@
                     
                         {{-- Type --}}
                         <div class="basis-44">
-                            <p class="text-center">{{ $device->type->name }}</p>
+                            @if ($device->type)
+                                <p class="text-center">{{ $device->type->name }}</p>
+                            @else
+                                <p class="text-center text-anthracite-grey">Non défini</p>
+                            @endif
                         </div>
                     
                         {{-- Owner --}}

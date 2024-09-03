@@ -19,6 +19,27 @@ class LocationController extends Controller
     }
 
     /**
+     * Rules to validate.
+     */
+    public function rules(): array
+    {
+        return [
+            'name' => 'required',
+        ];
+    }
+
+    /**
+     * Custom validation messages.
+     */
+
+     public function messages(): array
+     {
+         return [
+             'name.required' => 'Le nom de l\'emplacement est requis.',
+         ];
+     }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -31,21 +52,11 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-        ]);
+        $validatedData = $request->validate($this->rules(), $this->messages());
 
-        $location = Location::create($validatedData);
+        Location::create($validatedData);
 
         return redirect()->route('locations.index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -61,9 +72,7 @@ class LocationController extends Controller
      */
     public function update(Request $request, Location $location)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-        ]);
+        $validatedData = $request->validate($this->rules(), $this->messages());
 
         $location->update($validatedData);
 

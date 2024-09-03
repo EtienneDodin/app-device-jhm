@@ -19,6 +19,27 @@ class OwnerController extends Controller
     }
 
     /**
+     * Rules to validate.
+     */
+    public function rules(): array
+    {
+        return [
+            'name' => 'required',
+        ];
+    }
+
+    /**
+     * Custom validation messages.
+     */
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Le nom de l\'utilisateur est requis.',
+        ];
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -31,11 +52,9 @@ class OwnerController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-        ]);
+        $validatedData = $request->validate($this->rules(), $this->messages());
 
-        $owner = Owner::create($validatedData);
+        Owner::create($validatedData);
 
         return redirect()->route('owners.index');
     }
@@ -53,9 +72,7 @@ class OwnerController extends Controller
      */
     public function update(Request $request, Owner $owner)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-        ]);
+        $validatedData = $request->validate($this->rules(), $this->messages());
 
         $owner->update($validatedData);
 
