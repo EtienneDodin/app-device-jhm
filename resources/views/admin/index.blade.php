@@ -96,26 +96,26 @@
             <div>
                 {{-- Heading --}}
                 <div class="bg-main-gray px-4 py-6 rounded">
-                    <ul class="flex font-proxima max-w-5xl">
-                        <li class="basis-28 text-center">Poste</li>
-                        <li class="basis-44 text-center">Type</li>
-                        <li class="basis-48 text-center">Utilisateur</li>
-                        <li class="basis-36 text-center">Emplacement</li>
-                        <li class="basis-32 text-center">Service</li>
-                        <li class="basis-36 text-center">Téléphone</li>
-                        <li class="basis-32 text-center">IP</li>
+                    <ul class="grid grid-cols-dashboard items-center font-proxima text-sm lg:text-base">
+                        <li class="text-center">Poste</li>
+                        <li class="text-center">Type</li>
+                        <li class="text-center">Utilisateur</li>
+                        <li class="text-center">Emplacement</li>
+                        <li class="text-center">Service</li>
+                        <li class="text-center">Téléphone</li>
+                        <li class="text-center">IP</li>
+                        <li></li>
                     </ul>
                 </div>
 
                 {{-- Content --}}
                 @foreach ($devices as $device)
-                    <div class="bg-white px-4 text-gray-900 py-6 rounded flex items-center border-b" wire:key="{{ $device->id }}">
-                    
+                    <div class="bg-white px-4 text-gray-900 text-sm lg:text-base grid grid-cols-dashboard items-center py-6 rounded border-b" wire:key="{{ $device->id }}">
                         {{-- Poste --}}
-                        <p class="basis-28 font-semibold text-center">{{ $device->code }}</p>
+                        <p class="font-semibold text-center">{{ $device->code }}</p>
                     
                         {{-- Type --}}
-                        <div class="basis-44">
+                        <div>
                             @if ($device->type)
                                 <p class="text-center">{{ $device->type->name }}</p>
                             @else
@@ -124,7 +124,7 @@
                         </div>
                     
                         {{-- Owner --}}
-                        <div class="basis-48">
+                        <div>
                             @if ($device->owner)
                                 <p class="text-center">{{ $device->owner->name }}</p>
                             @else
@@ -133,7 +133,7 @@
                         </div>
                     
                         {{-- Location --}}
-                        <div class="basis-36">
+                        <div>
                             @if ($device->location)
                                 <p class="text-center">{{ $device->location->name }}</p>
                             @else
@@ -143,7 +143,7 @@
                         </div>
 
                         {{-- Service --}}
-                        <div class="basis-32">
+                        <div>
                             @if ($device->service)
                                 <p class="text-center">{{ $device->service->name }}</p>
                             @else
@@ -153,25 +153,25 @@
                         </div>
                     
                         {{-- Phone number --}}
-                        <div class="basis-36">
+                        <div>
                             <p class="text-center">{{ $device->phone_number ? preg_replace('/(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/', '$1 $2 $3 $4 $5', '0' . $device->phone_number) : '' }}</p>
                         </div>
 
                         {{-- IP --}}
-                        <div class="basis-32">
+                        <div>
                             <p class="text-center">{{ $device->ip }}</p>
                         </div>
                     
                         {{-- Buttons --}}
-                        <div class="flex gap-6 ml-12">
+                        <div class="flex justify-center items-center gap-2 lg:gap-4">
                             {{-- Edit --}}
-                            <a href="{{ route('devices.edit', $device) }}" class="rounded-md border border-gray-300 px-3 py-1.5 bg-main-gray hover:bg-main-gray/75 transition duration-200 ease">Modifier</a>
+                            <a href="{{ route('devices.edit', $device) }}" class="rounded-md border text-sm lg:text-base border-gray-300 px-2 lg:px-3 py-1.5 bg-main-gray hover:bg-main-gray/75 transition duration-200 ease-in">Modifier</a>
                         
                             {{-- Delete --}}
                             <form action="{{ route('devices.destroy', $device) }}" method="POST" x-data="{ open: false }">
                                 @method('DELETE')
                                 @csrf
-                                <button type="button" @click="open = true" class="rounded-md shadow-sm px-3 py-1.5 bg-light-orange hover:bg-main-orange transition duration-200 ease">Supprimer</button>
+                                <button type="button" @click="open = true" class="rounded-md shadow-sm text-sm lg:text-base px-2 lg:px-3 py-1.5 bg-light-orange hover:bg-main-orange transition duration-200 ease-in">Supprimer</button>
                             
                                 {{-- Confirmation modal window --}}
                                 {{-- Overlay --}}

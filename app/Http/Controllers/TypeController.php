@@ -86,7 +86,7 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        Device::where('type_id', $type->id)->update(['type_id' => null]);
+        Device::where('type_id', $type->id)->update(['type_id' => null, 'ip' => null, 'phone_number' => null]);
 
         $type->delete();
 

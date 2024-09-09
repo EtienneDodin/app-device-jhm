@@ -32,6 +32,9 @@ export default {
                 'main-orange': '#FD8149',
                 'red': '#FD5555',
             },
+            gridTemplateColumns: {
+                'dashboard': '1.5fr 2fr 2fr 2fr 2fr 2fr 2fr 3fr',
+            },
         },
     },
 

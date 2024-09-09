@@ -51,8 +51,8 @@ class HomeController extends Component
             $format = \Maatwebsite\Excel\Excel::MPDF;
         } elseif ($ext == 'xlsx') {
             $format = \Maatwebsite\Excel\Excel::XLSX;
-        };
+        }
 
-        return Excel::download($export, 'materiel.' . $ext, $format);
+        return Excel::download($export, 'materiel-' . now() . '.' . $ext, $format);
     }
 }

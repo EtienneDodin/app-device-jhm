@@ -10,6 +10,12 @@ use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\ServiceController;
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+
 Route::get('/', HomeController::class)->name('index');
 
 Route::get('/types', [TypeController::class,'index'])->name('types.index');
@@ -18,7 +24,6 @@ Route::post('/types/store', [TypeController::class,'store'])->name('types.store'
 Route::get('/types/edit/{type}', [TypeController::class,'edit'])->name('types.edit');
 Route::put('/types/update/{type}', [TypeController::class,'update'])->name('types.update');
 Route::delete('/types/destroy/{type}', [TypeController::class,'destroy'])->name('types.destroy');
-
 
 Route::get('/owners', [OwnerController::class,'index'])->name('owners.index');
 Route::get('/owners/create', [OwnerController::class,'create'])->name('owners.create');
@@ -47,10 +52,4 @@ Route::put('/services/update/{service}', [ServiceController::class,'update'])->n
 Route::post('/services/store', [ServiceController::class,'store'])->name('services.store');
 Route::delete('/services/destroy/{service}', [ServiceController::class,'destroy'])->name('services.destroy');
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/i', [AdminController::class,'index'])->name('iex');
 });

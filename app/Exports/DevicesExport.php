@@ -74,7 +74,7 @@ class DevicesExport implements FromCollection, WithHeadings, WithColumnFormattin
         return [
             $device->id,
             $device->code,
-            $device->type->name,
+            $device->type_id ? $device->type->name : '',
             $device->owner_id ? $device->owner->name : '',
             $device->location_id ? $device->location->name : '',
             $device->service_id ? $device->service->name : '',
